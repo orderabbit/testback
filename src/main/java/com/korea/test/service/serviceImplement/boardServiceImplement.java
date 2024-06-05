@@ -12,9 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +21,10 @@ public class boardServiceImplement implements BoardService {
     private final BoardRepository boardRepository;
 
     @Override
-    public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer itemNumber) {
+    public ResponseEntity<? super GetBoardResponseDto> getBoard(Integer boardNumber) {
         GetBoardResultSet resultSet = null;
         try {
-            resultSet = boardRepository.getBoard(itemNumber);
+            resultSet = boardRepository.getBoard(boardNumber);
 
             if (resultSet == null) return GetBoardResponseDto.notExistBoard();
 
@@ -54,14 +52,14 @@ public class boardServiceImplement implements BoardService {
     @Override
     public ResponseEntity<? super PatchBoardResponseDto> patchBoard(PatchBoardRequestDto dto, Integer boardNumber) {
 
-        try{
+        try {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            if(boardEntity == null) return PatchBoardResponseDto.notExistBoard();
+            if (boardEntity == null) return PatchBoardResponseDto.notExistBoard();
 
             boardEntity.patchBoard(dto);
             boardRepository.save(boardEntity);
 
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
@@ -70,13 +68,13 @@ public class boardServiceImplement implements BoardService {
 
     @Override
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(Integer boardNumber) {
-        try{
+        try {
             BoardEntity boardEntity = boardRepository.findByBoardNumber(boardNumber);
-            if(boardEntity == null) return DeleteBoardResponseDto.notExistedBoard();
+            if (boardEntity == null) return DeleteBoardResponseDto.notExistedBoard();
 
             boardRepository.delete(boardEntity);
 
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
@@ -85,14 +83,14 @@ public class boardServiceImplement implements BoardService {
 
     @Override
     public ResponseEntity<? super GetAllBoardsResponseDto> getAllBoards() {
-        try{
+        List<BoardEntity> boards = null;
+        try {
+            boards = boardRepository.findAll();
 
-            List<BoardEntity> boards = boardRepository.findAll();
-
-        }catch(Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
-        return GetAllBoardsResponseDto.success();
+        return GetAllBoardsResponseDto.success(boards);
     }
 }

@@ -8,8 +8,6 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-
 @Getter
 public class GetBoardResponseDto extends ResponseDto {
 
@@ -20,7 +18,7 @@ public class GetBoardResponseDto extends ResponseDto {
     public GetBoardResponseDto(GetBoardResultSet resultSet){
         super(ResponseCode.SUCCESS, ResponseMessage.SUCCESS);
 
-        this.boardNumber = resultSet.getItemNumber();
+        this.boardNumber = resultSet.getBoardNumber();
         this.title = resultSet.getTitle();
         this.content = resultSet.getContent();
     }

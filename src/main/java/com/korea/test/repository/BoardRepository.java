@@ -14,8 +14,8 @@ public interface BoardRepository extends JpaRepository<BoardEntity, Integer> {
                     "SELECT " +
                             "B.board_number AS boardNumber, " +
                             "B.title AS title, " +
-                            "B.content AS content, " +
-                            "FROM board_list AS B " +
+                            "B.content AS content " +
+                            "FROM board_entity AS B " +
                             "WHERE board_number = ?1 ",
             nativeQuery = true
     )

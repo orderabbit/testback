@@ -48,12 +48,12 @@ public class BoardController {
         return response;
     }
 
-    @DeleteMapping("/delete/{itemNumber}")
+    @DeleteMapping("/delete/{boardNumber}")
     public ResponseEntity<? super DeleteBoardResponseDto> deleteBoard(
-            @PathVariable("itemNumber") Integer itemNumber,
+            @PathVariable("boardNumber") Integer boardNumber,
             @AuthenticationPrincipal String userId
     ) {
-        ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(itemNumber);
+        ResponseEntity<? super DeleteBoardResponseDto> response = boardService.deleteBoard(boardNumber);
         return response;
     }
 }
